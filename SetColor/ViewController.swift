@@ -12,8 +12,6 @@ import Foundation
 class ViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet var mainView: UIView!
-//    @IBOutlet var greenView: UIView!
-//    @IBOutlet var blueView: UIView!
     
     @IBOutlet var redLabel: UILabel!
     @IBOutlet var greenLabel: UILabel!
@@ -87,20 +85,20 @@ class ViewController: UIViewController, UITextFieldDelegate{
         greenTextField.inputAccessoryView = doneToolBar
         blueTextField.inputAccessoryView = doneToolBar
         
-        //Hide keyboard by tap
-        self.redTextField.delegate = self
-        self.greenTextField.delegate = self
-        self.blueTextField.delegate = self
+        //Hide keyboard by tap - done through Tap gesture recognizer
+//        self.redTextField.delegate = self
+//        self.greenTextField.delegate = self
+//        self.blueTextField.delegate = self
     }
     
     @objc func doneClicked() {
         view.endEditing(true)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        return true
+//    }
 
     @IBAction func setRed() {
         redLabel.text = "Red: \((redSlider.value * 100).rounded() / 100)"
@@ -129,6 +127,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBAction func inputRed() {
         guard let inputValue = redTextField.text, !inputValue.isEmpty else { return }
         
+//        Не нравится наличие форс анрэпов! Перевести в опшинал бандинг?
         if Double(inputValue)! > 1 {
             ShowAllert(title: "Введено неверное значение", message: "Пожалуйста, введите значение от 0 до 1", textField: redTextField)
         }
@@ -167,6 +166,13 @@ class ViewController: UIViewController, UITextFieldDelegate{
         
         mainView.backgroundColor = UIColor(red: redValue, green: greenValue, blue: blueValue, alpha: 1)
     }
+    
+    @IBAction func tapForScreen(_ sender: Any) {
+        redTextField.resignFirstResponder()
+        greenTextField.resignFirstResponder()
+        blueTextField.resignFirstResponder()
+    }
+    
 }
 
 extension ViewController {
@@ -176,11 +182,11 @@ extension ViewController {
             message: message,
             preferredStyle: .alert)
         
-        let okAktion = UIAlertAction(title: "Ok", style: .default) { _ in
+        let okAсtion = UIAlertAction(title: "Ok", style: .default) { _ in
             textField.text = "1"
         }
         
-        allert.addAction(okAktion)
+        allert.addAction(okAсtion)
         present(allert, animated: true)
     }
 }
